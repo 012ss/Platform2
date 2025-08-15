@@ -31,7 +31,7 @@ const ticketSchema = new mongoose.Schema({
     status: { // <-- IMPORTANT ADDITION
         type: String,
         enum: ['OPEN', 'PENDING_MANUAL_REVIEW', 'RESOLVED'],
-        default: 'OPEN'
+        // default: 'OPEN'
     }
 }, { timestamps: true }); // This automatically adds createdAt and updatedAt
 

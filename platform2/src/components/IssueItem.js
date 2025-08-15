@@ -2,54 +2,56 @@ import React from 'react';
 import './IssueItem.css';
 
 const IssueItem = ({ issue, onStatusChange }) => {
+    const handleResolvedClick = async () => {
+        if (issue.status === 'PENDING_MANUAL_REVIEW') return; // No action if already pending
 
-    const handleButtonClick = () => {
-        onStatusChange(issue._id, issue.status);
+        const confirmed = window.confirm('Are you sure you want to mark this issue as pending review?');
+        if (!confirmed) return;
+
+        try {
+            const res = await fetch(`http://localhost:5000/api/tickets/${issue._id}/status`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ status: 'PENDING_MANUAL_REVIEW' })
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to update ticket status');
+            }
+
+            const updatedTicket = await res.json();
+
+            if (onStatusChange) {
+                onStatusChange(updatedTicket);
+            }
+        } catch (error) {
+            console.error('Error updating status:', error);
+            alert('Error updating status');
+        }
     };
 
-    // Determine the button text and if it should be disabled
-    let buttonText = '';
-    let isDisabled = false;
-
-    if (issue.status === 'OPEN') {
-        buttonText = 'Mark as Resolved';
-        isDisabled = false; // Button is active when open
-    } else if (issue.status === 'PENDING_MANUAL_REVIEW') {
-        buttonText = 'Mark as Resolved';
-        isDisabled = true; // Button is disabled when pending
-    }
-    
     return (
-        <div className={`issue-item-card status-${issue.status.toLowerCase()}`}>
+        <div className="issue-item-card">
             <div className="card-header">
                 <h3>Room: {issue.room}</h3>
-                <span className={`status-badge status-badge-${issue.status.toLowerCase()}`}>
-                    {issue.status.replace('_', ' ')}
-                </span>
+                {/* <span className="status-badge">{issue.status}</span> */}
+                {issue.status}
             </div>
             <div className="card-body">
                 <p className="issue-description">{issue.description}</p>
-                
-                {/* Image rendering is commented out, but can be re-enabled if needed. */}
-               
                 <div className="issue-details">
                     <p><strong>Category:</strong> {issue.category}</p>
                     <p><strong>Reported At:</strong> {new Date(issue.createdAt).toLocaleString()}</p>
                 </div>
             </div>
             <div className="card-footer">
-                {/* Conditionally render the button based on the status */}
-                {issue.status !== 'RESOLVED' ? (
-                    <button 
-                        onClick={handleButtonClick} 
-                        className={`resolve-btn status-${issue.status.toLowerCase()}`}
-                        disabled={isDisabled}
-                    >
-                        {buttonText}
-                    </button>
-                ) : (
-                    <span className="resolved-text">Problem Resolved</span>
-                )}
+                <button
+                    onClick={handleResolvedClick}
+                    className="resolve-btn"
+                    disabled={issue.status === 'PENDING_MANUAL_REVIEW'}
+                >
+                    Resolved
+                </button>
             </div>
         </div>
     );
