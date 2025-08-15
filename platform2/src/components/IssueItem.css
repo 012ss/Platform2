@@ -1,118 +1,223 @@
+/*
+ * ===========================================
+ * Global Variables and Core Styles
+ * ===========================================
+ */
+:root {
+    --color-bg-light: #f0f2f5;
+    --color-bg-card: #e6f7ff; /* Changed to a light blue for all cards */
+    --color-text-primary: #1e293b;
+    --color-text-secondary: #475569;
+    --color-text-muted: #94a3b8;
+    --color-primary: #3b82f6;
+    --color-success: #22c55e;
+    --color-warning: #f59e0b;
+    --color-info: #0ea5e9;
+    --color-error: #ef4444;
+    --color-border: #b3d9ff; /* Adjusted border color */
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --border-radius: 12px;
+}
+
+body {
+    background-color: var(--color-bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--color-text-primary);
+    line-height: 1.6;
+}
+
+/*
+ * ===========================================
+ * IssuesList Container
+ * ===========================================
+ */
+.issues-list-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.issues-list-container .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--color-bg-card);
+    border-radius: var(--border-radius);
+    border: 2px dashed var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/*
+ * ===========================================
+ * IssueItem Card
+ * ===========================================
+ */
 .issue-item-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin-bottom: 20px;
-  border-left: 5px solid #ffc107; /* Default: Pending/Open */
-  transition: box-shadow 0.3s ease;
+    background-color: var(--color-bg-card);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid var(--color-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .issue-item-card:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
-/* Status-specific border colors */
-.issue-item-card.status-open {
-  border-left-color: #ffc107; /* Yellow for Open */
-}
-.issue-item-card.status-resolved {
-  border-left-color: #28a745; /* Green for Resolved */
-}
-.issue-item-card.status-rejected {
-  border-left-color: #dc3545; /* Red for Rejected */
-}
-
-
+/*
+ * ===========================================
+ * Card Header and Status Badge
+ * ===========================================
+ */
 .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.card-header .header-content {
+    flex-grow: 1;
 }
 
 .card-header h3 {
-  margin: 0;
-  color: #333;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.2;
 }
 
 .status-badge {
-  padding: 5px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: #fff;
+    padding: 6px 14px;
+    border-radius: 9999px; /* Pill shape */
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-.status-badge-open { background-color: #ffc107; color: #333; }
-.status-badge-resolved { background-color: #28a745; }
-.status-badge-rejected { background-color: #dc3545; }
+.status-badge.open {
+    background-color: var(--color-primary);
+    color: white;
+}
 
+.status-badge.pending-manual-review {
+    background-color: var(--color-warning);
+    color: var(--color-text-primary);
+}
 
+.status-badge.resolved {
+    background-color: var(--color-success);
+    color: white;
+}
+
+/*
+ * ===========================================
+ * Card Body and Details
+ * ===========================================
+ */
 .card-body {
-  padding: 20px;
+    margin-bottom: 24px;
 }
 
 .issue-description {
-  font-size: 16px;
-  color: #555;
-  margin-bottom: 20px;
+    margin: 0 0 16px 0;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
 }
 
-.issue-details p {
-  font-size: 14px;
-  color: #777;
-  margin: 5px 0;
+.issue-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.media-link {
-  display: inline-block;
-  margin-top: 15px;
-  font-weight: bold;
-  color: #007bff;
-  text-decoration: none;
+.issue-details .detail-item {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
 }
 
+.issue-details .detail-item strong {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-right: 8px;
+}
+
+.issue-details .detail-item svg {
+    margin-right: 8px;
+    color: var(--color-text-muted);
+}
+
+/*
+ * ===========================================
+ * Card Footer and Buttons
+ * ===========================================
+ */
 .card-footer {
-  padding: 15px 20px;
-  background-color: #fafafa;
-  text-align: right;
-  border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-border);
 }
 
 .resolve-btn {
-    background-color: #28a745;
+    background-color: var(--color-success);
     color: white;
+    padding: 12px 24px;
     border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    min-width: 100px; /* Keeps size consistent */
-    height: 36px;     /* Keeps height consistent */
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.resolve-btn:hover:not(:disabled) {
+    background-color: #16a34a; /* Slightly darker green */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.resolve-btn:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
 }
 
 .resolve-btn:disabled {
-    background-color: #cccccc; /* Greyed out */
-    color: #666666;
+    background-color: var(--color-disabled);
+    color: var(--color-text-muted);
     cursor: not-allowed;
-    opacity: 0.6; /* Slightly blurred look */
+    box-shadow: none;
+    opacity: 0.7;
 }
 
-.resolve-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Add this to the end of IssueItem.css */
-
-.media-container {
-    margin-bottom: 20px;
-}
-
-.issue-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    border: 1px solid #ddd;
+/* Utility classes for icons */
+.icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
