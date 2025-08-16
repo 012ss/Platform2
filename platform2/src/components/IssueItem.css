@@ -1,20 +1,14 @@
-/*
- * ===========================================
- * Global Variables and Core Styles
- * ===========================================
- */
 :root {
     --color-bg-light: #f0f2f5;
-    --color-bg-card: #e6f7ff; /* Changed to a light blue for all cards */
+    --color-bg-card: #e6f7ff;
     --color-text-primary: #1e293b;
     --color-text-secondary: #475569;
     --color-text-muted: #94a3b8;
     --color-primary: #3b82f6;
     --color-success: #22c55e;
     --color-warning: #f59e0b;
-    --color-info: #0ea5e9;
     --color-error: #ef4444;
-    --color-border: #b3d9ff; /* Adjusted border color */
+    --color-border: #b3d9ff;
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
     --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
@@ -28,11 +22,6 @@ body {
     line-height: 1.6;
 }
 
-/*
- * ===========================================
- * IssuesList Container
- * ===========================================
- */
 .issues-list-container {
     max-width: 900px;
     margin: 40px auto;
@@ -50,18 +39,13 @@ body {
     font-weight: 500;
 }
 
-/*
- * ===========================================
- * IssueItem Card
- * ===========================================
- */
 .issue-item-card {
     background-color: var(--color-bg-card);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     padding: 24px;
     margin-bottom: 24px;
-    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid var(--color-border);
     display: flex;
     flex-direction: column;
@@ -73,11 +57,6 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
-/*
- * ===========================================
- * Card Header and Status Badge
- * ===========================================
- */
 .card-header {
     display: flex;
     justify-content: space-between;
@@ -86,30 +65,23 @@ body {
     margin-bottom: 16px;
 }
 
-.card-header .header-content {
-    flex-grow: 1;
-}
-
 .card-header h3 {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-text-primary);
-    line-height: 1.2;
 }
 
 .status-badge {
     padding: 6px 14px;
-    border-radius: 9999px; /* Pill shape */
+    border-radius: 9999px;
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 6px;
+    white-space: nowrap;
 }
 
 .status-badge.open {
@@ -127,11 +99,6 @@ body {
     color: white;
 }
 
-/*
- * ===========================================
- * Card Body and Details
- * ===========================================
- */
 .card-body {
     margin-bottom: 24px;
 }
@@ -167,11 +134,6 @@ body {
     color: var(--color-text-muted);
 }
 
-/*
- * ===========================================
- * Card Footer and Buttons
- * ===========================================
- */
 .card-footer {
     display: flex;
     justify-content: flex-end;
@@ -197,7 +159,7 @@ body {
 }
 
 .resolve-btn:hover:not(:disabled) {
-    background-color: #16a34a; /* Slightly darker green */
+    background-color: #16a34a;
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
@@ -208,14 +170,40 @@ body {
 }
 
 .resolve-btn:disabled {
-    background-color: var(--color-disabled);
+    background-color: #ccc;
     color: var(--color-text-muted);
     cursor: not-allowed;
     box-shadow: none;
     opacity: 0.7;
 }
 
-/* Utility classes for icons */
+/* =====================================
+   Issue Image Styling
+   ===================================== */
+.issue-image-container {
+    margin: 12px 0;
+    width: 100%;
+    max-height: 220px;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+}
+
+.issue-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    display: block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.issue-image:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+}
+
 .icon {
     width: 20px;
     height: 20px;

@@ -27,7 +27,10 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    images: [imageSchema],
+    imageUrl: {
+        type: String, // URL to the image
+        default: ''
+    },
     status: { // <-- IMPORTANT ADDITION
         type: String,
         enum: ['OPEN', 'PENDING_MANUAL_REVIEW', 'RESOLVED'],
